@@ -1,0 +1,59 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} {{ review_name }} {% endblock %}
+
+{% block main_block %}
+
+
+    {% if working and not deleted %}
+        <h1>Review: {{ review_name }}</h1>
+        <br/>
+        <div class="cust-aside">
+            This is your currently selected review
+        </div>
+    {% elif not deleted %}
+        <form class="pure-form" method="post">
+            {% csrf_token %}
+            <div class="pure-control-group">
+                <label><h1>Review: {{ review_name }}</h1></label>
+                <input type="submit" class="pure-button pure-button-primary" name='workon' value="Work on this review">
+            </div>
+        </form>
+    {% endif %}
+    <br/>
+    {% if deleted %}
+        <div class="cust-aside-error">
+            You deleted this review
+        </div>
+    {% else %}
+         <p>
+            Description:
+            <b>{{ review_description }}</b>
+        </p>
+        <p>
+            Start Date:
+            <b>{{ review_date_started }}</b>
+        </p>
+        <p>
+            Abstract Pool:
+            <b>{{ pool_size }}</b>
+        </p>
+        <p>
+            Document Pool:
+            <b>{{ abstracts_judged }}</b>
+        </p>
+        <p>
+            Final Pool:
+            <b>{{ document_judged }}</b>
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <input id="confirmDel" type="button" class="pure-button cust-button-r" name='delete' value="Delete this review">
+        </form>
+        <br/>
+    {% endif %}
+
+{% endblock %}

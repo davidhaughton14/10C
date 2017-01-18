@@ -1,0 +1,61 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Document Pool {% endblock %}
+
+{% block main_block %}
+
+    <h1>Document pool for your review,{{review_name}}. </h1>
+    {% if papers %}
+    Below are the abstracts you have added to the document pool.<br/>
+    Select which ones you'd like add to the final pool, or which ones you'd like to remove from the document pool.
+    <br/>
+    <br/>
+
+    <div class = "scrollit">
+        <table class = "cust-pure-table cust-pure-table-striped cust-pure-table-bordered" id = "document_pool">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" /></th>
+                    <th>Details</th>
+                    <th>Abstract</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for paper in papers %}
+                    <tr id="paper{{paper.pk}}">
+                        <td><input type="checkbox" class = "case"></td>
+                        <td><div class ="title">{{paper.title}}</div>
+                            <br/>
+                        <div class ="authors">{{paper.authors}}</div>
+                            <br/>
+                        {{paper.publish_date}}</td>
+                        <td><div class ="abstract">{{paper.abstract}}</div></td>
+
+                        <td>
+                            {% if 'http' in paper.paper_url %}
+                                <a class="pure-button pure-button-primary" href="{{paper.paper_url}}">View Paper</a></td>
+                            {% else %}
+                                <p>No Paper Available</p>
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+         <br><br>
+         <div class = "container">
+            <input class="pure-button cust-button-g" type="button" name="abstract" value="Mark as relevant" id="add2FP">
+            <input class="pure-button cust-button-r" type="button" name="abstract" value="Mark as not relevant" id ="removefromDP" >
+         </div>
+    {% else %}
+        <h2> There are no documents in your document pool!</h2>
+    {% endif %}
+
+
+{% endblock %}

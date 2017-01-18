@@ -1,0 +1,49 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Abstract Pool {% endblock %}
+
+{% block main_block %}
+
+    <h1>Abstract pool for your review, {{review_name}}. </h1>
+    {% if papers %}
+        Below are the abstracts you have added to the abstract pool.<br/>
+        Select which ones you'd like add to the document pool, or which ones you'd like to remove from the abstract pool.
+        <br><br>
+
+    <div class = "scrollit">
+        <table class = "cust-pure-table cust-pure-table-striped cust-pure-table-bordered " id = "abstract_pool">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" ></th>
+                    <th>Details</th>
+                    <th>Abstract</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paper in papers %}
+                        <tr id="paper{{paper.pk}}">
+                            <td><input type="checkbox" class="case"/></td>
+                            <td><div class ="title">{{paper.title}}</div>
+                                <br/>
+                            <div class ="authors">{{paper.authors}}</div>
+                                <br/>
+                            <div class="date">{{paper.publish_date}}</div></td>
+                            <td><div class ="abstract">{{paper.abstract}}</div></td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <br/>
+        <br/>
+        <div class = "container">
+            <input class="pure-button cust-button-g" type="button" name="abstract" value="Mark as relevant" id = "add2DP">
+            <input class="pure-button cust-button-r" type="button" name="abstract" value="Mark as not relevant" id = "removefromAP">
+        </div>
+    {% else %}
+        <h2> There are no abstracts in your abstract pool!</h2>
+    {% endif %}
+
+{% endblock %}

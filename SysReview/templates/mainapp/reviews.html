@@ -1,0 +1,23 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Reviews {% endblock %}
+
+{% block main_block %}
+
+    <h1>Your Reviews</h1>
+    <br/>
+    <b>Select a review below to work on it or to see more info</b>
+    <br/>
+    <br/>
+    <div class="cust-well pure-u-4-5">
+        <div class="pure-menu pure-menu-scrollable">
+            <ul class="pure-menu-list">
+                {% for review in review_list %}
+                    <li class="pure-menu-item"><a class="pure-menu-link cust-blacktext" href="{% url 'review' review.slug %}">{{ review.name }} </a> </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

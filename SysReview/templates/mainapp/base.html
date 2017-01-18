@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery-1.12.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.numberedtextarea.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/mainapp-jquery.js' %}"></script>
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure-min.css' %}">
+    <title>SysReviewer {% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="cust-maxedcontainer cust-shadowbox">
+    <div class="pure-menu pure-menu-horizontal cust-navmenu">
+        <a href="{% url 'index' %}" class="pure-menu-heading">SysReviewer</a>
+        <ul class="pure-menu-list">
+            {% if user.is_authenticated %}
+                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'profile' %}">Profile</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'logout' %}">Logout</a></li>
+                <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                    <a href="#" id="menuLink1" class="pure-menu-link">Reviews</a>
+                    <ul class="pure-menu-children">
+                        <li class="pure-menu-item"><a class="pure-menu-link cust-blacktext" href="{% url 'reviews' %}">Your
+                            Reviews</a></li>
+                        <li class="pure-menu-item"><a class="pure-menu-link cust-blacktext"
+                                                      href="{% url 'create_review' %}">Create Review</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="pure-menu-item"><a class="pure-menu-link"
+                                              href="{% url 'login_register' %}">Login/Register</a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+    <div class="pure-g cust-maxedcontainer">
+        <div class="pure-u-1-5 cust-sidebar">
+            {% if user.is_authenticated and not current_review == None and not current_review == "" %}
+                <br/>
+                <div class="cust-centered cust-aside"><b>{{ current_review }}</b></div>
+                <br/>
+                <br/>
+                <div class="pure-menu pure-menu-vertical">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'create_query' current_review %}">Add Query Part</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'queries' current_review %}">Query Parts</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'abstract_pool' current_review %}">Abstract Pool</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'document_pool' current_review %}">Document Pool</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'final_pool' current_review %}">Final Pool</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'review' current_review %}">Details</a></li>
+                    </ul>
+                </div>
+            {% elif user.is_authenticated %}
+                <div class="pure-menu pure-menu-vertical">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'reviews' %}">Select a Review</a></li>
+                        <br/>
+                        <li class="pure-menu-item cust-button-container"><a class="pure-menu-link cust-menu-link" href="{% url 'create_review' %}">Create a Review</a></li>
+            </ul>
+                </div>
+            {% endif %}
+        </div>
+        <div class="pure-u-4-5 cust-maincontainer">
+            {% block main_block %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

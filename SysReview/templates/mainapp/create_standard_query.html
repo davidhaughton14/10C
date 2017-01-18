@@ -1,0 +1,25 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Query Editor {% endblock %}
+
+{% block main_block %}
+    <script type="text/javascript" src="{% static 'js/jquery.numberedtextarea.js' %}"></script>
+
+    <h1>Create Query</h1>
+    {% if submitted %}
+            <div class="cust-aside">Query submitted</div>
+            <br/>
+    {% endif %}
+
+    <!--    <form class="pure-form pure-form-aligned" id="advanced_query" method="post" action="{% url 'create_query' review_name_slug %}">
+        {% csrf_token %}
+        <legend>Advanced Query: </legend>
+        <textarea name="query_string" value="" rows="20" cols="100" autofocus ></textarea>
+        <br/>
+        <input class="pure-button pure-button-primary" type="submit" name="advanced" value="See Results" />
+    </form>
+    <br />-->
+
+{% endblock %}

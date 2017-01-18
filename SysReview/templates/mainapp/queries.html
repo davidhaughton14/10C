@@ -1,0 +1,42 @@
+{% extends 'mainapp/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Query {% endblock %}
+
+{% block main_block %}
+
+    <h1>Queries</h1>
+    {% if queries %}
+        <div class="scrollit">
+            <table class="cust-pure-table cust-pure-table-bordered">
+                <tbody>
+                {% for query in queries %}
+                    <tr id="query{{ query.pk }}">
+                        <td>{{ query.query_string }}</td>
+                        <td>{{query.pool_size}} Abstracts</td>
+                        <td><input type="button" class="pure-button pure-button-primary" id="deleteQuery{{ query.pk }}"
+                                   value="Delete"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <br/>
+        <a id="completequeries" class="cust-button-g cust-whitetext">Finalize Queries</a>
+        <a class="cust-button" href="{% url 'create_query' review_name_slug %}">Add Query Part</a>
+        <div id="full_query_results" class="cust-button">Check total results</div>
+        <br/>
+        <img id="ajaxloading" src="{% static 'css/rolling.gif' %}">
+
+    {% else %}
+        <strong>No saved queries for {{review.name}}</strong>
+        <br/>
+        <br/>
+        <a class="cust-button" href="{% url 'create_query' review_name_slug%}">Create Query Part</a>
+
+    {% endif %}
+
+
+{% endblock %}
